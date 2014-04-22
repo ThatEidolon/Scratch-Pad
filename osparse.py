@@ -1,4 +1,8 @@
 import xml.etree.ElementTree as ET
+import socket
+
+dnsservers = {'dev':'10.10.1.3','test':'10.10.2.3','prod':'10.10.3.3'}
+
 tree = ET.parse('test.xml')
 root = tree.getroot()
 """
