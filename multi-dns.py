@@ -22,13 +22,17 @@ def build_resolvers():
 		resolvers[zone] = new_resolver(dns_servers[zone])
 	return
 
+
 def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument("ip", help="IP address to lookup")
 	args = parser.parse_args()	
 	build_resolvers()
-	ip_reverse = reversename.from_address(args.ip)
-	print ip_reverse
+	try:
+		ip_reverse = reversename.from_address(args.ip)
+	except:
+		print "[-] Must use valid IP address"
+		return
 	for zone in resolvers:
 		try:
 			hostname = resolvers[zone].query(ip_reverse, "PTR")[0]
