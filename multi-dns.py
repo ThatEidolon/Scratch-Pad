@@ -5,7 +5,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("IP", help="IP address to lookup")
 args = parser.parse_args()
 
-dns_servers = {'cde': '10.10.10.10', 'prod': '10.10.10.11'}
+dns_servers = {'cde': '8.8.8.8', 'prod': '8.8.4.4'}
 resolvers = {}
 
 def new_resolver (dns_ip):
@@ -28,8 +28,14 @@ def main():
 	args = parser.parse_args()	
 	build_resolvers()
 	ip_reverse = reversename.from_address(args.ip)
+	print ip_reverse
 	for zone in resolvers:
-		print zone, resolvers[zone].query(ip_reverse)
+		try:
+			hostname = resolvers[zone].query(ip_reverse, "PTR")[0]
+		except:
+			hostname = 'UNKNOWN'
+		finally:
+			print zone, ' : ', hostname
 	
 if __name__ == '__main__' :
 	main()
