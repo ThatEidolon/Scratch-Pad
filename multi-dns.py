@@ -37,7 +37,7 @@ def main():
 		try:
 			hostname = resolvers[zone].query(ip_reverse, "PTR")[0]
 		except:
-			hostname = 'UNKNOWN'
+			hostname = ''
 		finally:
 			print zone, ' : ', hostname
 	
